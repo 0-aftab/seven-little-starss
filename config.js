@@ -11,7 +11,7 @@ window.SITE_CONFIG = {
 
   // Birthday: October 22 (month is 1-12). The year is picked automatically,
   // so the countdown always points at the current year's birthday.
-  BIRTHDAY_MONTH: 8,
+  BIRTHDAY_MONTH: 10,
   BIRTHDAY_DAY: 22,
 
   // Message board (page 8): GitHub Pages has no backend, so messages are sent
