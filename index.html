@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#220c38" />
+  <title>✨ 7 Little Stars — for You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div id="loader" class="loader">
+    <div class="loader-inner">
+      <div class="loader-stars">🌸</div>
+      <p class="loader-msg" id="loader-msg">Loading stars...</p>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar" id="loader-bar"></div>
+      </div>
+      <p class="loader-sub" id="loader-sub">Setting up the night sky</p>
+    </div>
+  </div>
+
+  <!-- LOCK SCREEN (shown after the loader until LOCK_UNTIL) -->
+  <div id="lock-screen" class="lock-screen" aria-hidden="true">
+    <div class="lock-inner">
+      <div class="lock-star">✦</div>
+      <p class="lock-title">Come back on 22.10.</p>
+      <p class="lock-sub">It’ll make sense then.</p>
+    </div>
+  </div>
+
+  <!-- Sky + atmosphere -->
+  <canvas id="sky"></canvas>
+  <div class="petal-container" id="petal-container"></div>
+
+  <!-- Moon with dialogue -->
+  <div class="moon" id="moon">
+    <div class="moon-glow"></div>
+    <div class="moon-face">🌙</div>
+  </div>
+
+  <!-- Floating thoughts layer -->
+  <div class="float-thoughts" id="float-thoughts"></div>
+
+  <!-- Sparkle burst -->
+  <div class="sparkle-burst" id="sparkle-burst" aria-hidden="true"></div>
+
+  <!-- Music toggle -->
+  <button class="music-btn" id="music-btn" aria-label="Toggle music">
+    <span id="music-icon">♪</span>
+  </button>
+  <audio id="bgm" preload="auto" loop>
+    <source src="cupid.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Countdown bar -->
+  <div class="countdown-bar" id="countdown-bar">
+    <span class="cd-label">Birthday in</span>
+    <div class="cd-units">
+      <div class="cd-unit"><span id="cd-d">--</span><small>days</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cd-h">--</span><small>hrs</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cd-m">--</span><small>min</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit"><span id="cd-s">--</span><small>sec</small></div>
+    </div>
+  </div>
+
+  <!-- PAGE 1 — LANDING -->
+  <section id="pg-landing" class="page page--active">
+    <div class="landing-wrap">
+      <p class="eyebrow">a birthday gift, for you</p>
+      <h1 class="landing-title">
+        <span class="title-em">✨</span>
+        <span class="title-main">7 Little<br /><em>Stars</em></span>
+        <span class="title-em">✨</span>
+      </h1>
+      <p class="landing-name"><span class="if-name">for <strong>Irham Saba</strong></span><span class="if-noname">for <strong>You</strong></span></p>
+      <button class="btn-cta" id="btn-enter">Open your stars →</button>
+      <p class="landing-hint">7 stars · 3 hidden stars · 1 secret unlock</p>
+      <div class="landing-cd">
+        <span class="landing-cd-label">birthday in</span>
+        <div class="landing-cd-units">
+          <span id="lcd-d">--</span><small>d</small>
+          <span class="lcd-sep">:</span>
+          <span id="lcd-h">--</span><small>h</small>
+          <span class="lcd-sep">:</span>
+          <span id="lcd-m">--</span><small>m</small>
+          <span class="lcd-sep">:</span>
+          <span id="lcd-s">--</span><small>s</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2 — NOTE -->
+  <section id="pg-note" class="page">
+    <div class="h-star" id="hs-1" data-hid="h1">✦</div>
+    <p class="h-star-hint" id="hs-hint-1">upr dekho ✦</p>
+
+    <div class="note-wrap">
+      <div class="glass-card note-card">
+        <div class="note-icon">💌</div>
+        <p class="note-label">a little note</p>
+        <h2 class="note-heading">Suno.</h2>
+        <p class="note-body">
+        Chahta toh ek normal message hi bejh deta lekin meri masti toh dekho, khairr...
+         Mujhe laga birthday par kuch thoda alag hona chahiye.<br /><br />
+         Agle page pe maine constellation banane ka try kiya ha.
+         Aaram se dekhna.<br /><br />
+          <em>Aur haan site mai 3 hidden stars bhi hain.
+         Mil gaye toh kuch extra unlock hoga. 👀 </em>
+        </em>  Upar right side dekho </em>
+        </p>
+        <button class="btn-primary" id="btn-to-stars">chalo →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3 — CONSTELLATION -->
+  <section id="pg-stars" class="page">
+    <div class="h-star top-right" id="hs-2" data-hid="h2">✦</div>
+    <p class="h-star-hint" id="hs-hint-2">mil gaya shyd ✦</p>
+
+    <div class="stars-wrap">
+      <div class="stars-header">
+        <h2 class="stars-title">7 Little Stars</h2>
+        <p class="stars-sub">Tap each star to reveal what it holds.</p>
+        <div class="progress-pill">
+          <div class="progress-fill" id="progress-fill"></div>
+          <span class="progress-text" id="progress-text">0 of 7</span>
+        </div>
+      </div>
+
+      <div class="constellation" id="constellation">
+        <canvas id="con-lines"></canvas>
+        <div id="star-nodes"></div>
+      </div>
+
+      <button class="btn-eab" id="btn-eab">💬 ek or baat...</button>
+      <button class="btn-ghost" id="btn-to-wishes">Continue →</button>
+    </div>
+  </section>
+
+  <!-- PAGE 4 — WISHES -->
+  <section id="pg-wishes" class="page">
+    <div class="wishes-wrap">
+      <h2 class="section-title">A Wish for Every Month</h2>
+      <p class="section-sub"> Full year ahead.</p>
+      <div class="wishes-grid" id="wishes-grid"></div>
+      <button class="btn-ghost" id="btn-to-birthday">Birthday Message →</button>
+    </div>
+  </section>
+
+  <!-- PAGE 5 — BIRTHDAY MSG -->
+  <section id="pg-birthday" class="page">
+    <div class="birthday-wrap">
+
+      <div id="bday-locked" class="glass-card bday-card">
+        <div class="lock-icon">🔒</div>
+        <h2 class="bday-heading">A Message for your birthday</h2>
+        <p class="bday-sub">
+          This unlocks on your birthday at midnight.<br />
+          <em>Come back then</em>
+        </p>
+        <div class="countdown-big">
+          <div class="cdb-unit"><span id="cdb-d">--</span><small>Days</small></div>
+          <div class="cdb-unit"><span id="cdb-h">--</span><small>Hours</small></div>
+          <div class="cdb-unit"><span id="cdb-m">--</span><small>Minutes</small></div>
+          <div class="cdb-unit"><span id="cdb-s">--</span><small>Seconds</small></div>
+        </div>
+        <p class="bday-fun-fact" id="bday-fun-fact"></p>
+        <button class="btn-ghost" id="btn-to-final-from-bday">Skip for now →</button>
+      </div>
+
+      <div id="bday-open" class="glass-card bday-card" style="display:none">
+        <div class="h-star bottom-left" id="hs-3" data-hid="h3">✦</div>
+        <p class="h-star-hint" id="hs-hint-3">ye last ha ✦</p>
+        <div class="open-icon">🎂</div>
+        <h2 class="bday-heading" id="bday-title"></h2>
+        <p class="bday-msg" id="bday-msg"></p>
+        <button class="btn-primary" id="btn-to-final-from-open">Continue →</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PAGE 6 — FINAL -->
+  <section id="pg-final" class="page">
+    <div class="final-wrap">
+      <div class="final-glow"></div>
+      <p class="final-eyebrow">✦ &nbsp; ✦ &nbsp; ✦</p>
+      <h2 class="final-heading"><em>Happy Birthday<span class="if-name">,<br />Irham Saba</span>.</em></h2>
+      <p class="final-msg">
+        Jaisa be ye saal raha ho...Umeed ha alga saal
+       ache moments or hasi se barha ho
+        !.<br /><br />
+        
+      </p>
+
+      <!-- Time Capsule -->
+      <div class="glass-card time-capsule">
+        <p class="tc-label">⏳ The Time Capsule  </p>
+        <p class="tc-msg">
+         Hello, future you —<br />
+          Jab me ye site bana raha hu tab aapke birthday mai 120 din baki hain, Guess mai kahan hu ...library mai, kafi ajeeb lag raha ha matlab mai future mai msg bejh raha hu.<br />
+         Umeed ha life acha behave kr rahi hogi.<br />
+         Aur agar nhi kar rahi. 😭 <br />
+         Toh usse meri taraf se complaint register kr dena. 🌟
+        </p>
+      </div>
+
+      <div class="final-badge">
+        <span>✨</span><span>7 Little Stars Delivered ✓</span><span>✨</span>
+      </div>
+
+      <div class="hs-tracker">
+        <p class="hs-tracker-label">Hidden stars found</p>
+        <div class="hs-dots">
+          <span class="hs-dot" id="hd-h1">✦</span>
+          <span class="hs-dot" id="hd-h2">✦</span>
+          <span class="hs-dot" id="hd-h3">✦</span>
+        </div>
+        <p class="hs-tracker-hint" id="hs-hint-text">Find all 3 to unlock something special.</p>
+      </div>
+
+      <button class="btn-ghost small" id="btn-restart">↩ Start over</button>
+    </div>
+  </section>
+
+  <!-- PAGE 7 — UNLOCK -->
+  <section id="pg-unlock" class="page">
+    <div class="unlock-wrap">
+      <div class="glass-card unlock-card">
+        <p class="unlock-icon">🔑</p>
+        <h2 class="unlock-heading">You found all 3 stars.</h2>
+        <p class="unlock-sub">
+          Enter your secret code to unlock a private space —
+        </p>
+        <div class="code-input-wrap">
+          <input type="text" id="code-input" class="code-input"
+            placeholder="Enter code..." maxlength="12"
+            autocomplete="off" spellcheck="false" />
+          <button class="btn-primary" id="btn-verify-code">Unlock →</button>
+        </div>
+        <p class="code-error" id="code-error"></p>
+        <p class="code-hint">Hint: name + birthday date + month 🤔</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 8 — MESSAGE BOARD -->
+  <section id="pg-message" class="page">
+    <div class="msg-wrap">
+      <div class="glass-card msg-card">
+        <p class="msg-icon">🌠</p>
+        <h2 class="msg-heading">Agr kuch kehna ha toh.<br /><em>I'm listening.</em></h2>
+        <p class="msg-sub">
+          Likho... mai dekh lunga
+        </p>
+        <textarea id="msg-textarea" class="msg-textarea"
+          placeholder="Whatever's on your mind..." maxlength="2000" rows="5"></textarea>
+        <div class="msg-footer">
+          <span class="msg-count" id="msg-count">0 / 2000</span>
+          <button class="btn-primary" id="btn-send-msg">Send →</button>
+        </div>
+        <p class="msg-sent" id="msg-sent" style="display:none">
+          ✓ Sent. Arey bas itna hi tha...chalo abb soo javo🥱 🌸
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAR MODAL -->
+  <div id="star-modal" class="modal-bg" aria-hidden="true">
+    <div class="modal-card glass-card" role="dialog" aria-modal="true">
+      <button class="modal-x" id="modal-x">✕</button>
+      <div class="modal-symbol" id="modal-symbol"></div>
+      <p class="modal-num" id="modal-num"></p>
+      <h3 class="modal-name" id="modal-name"></h3>
+      <p class="modal-msg" id="modal-msg"></p>
+      <div class="modal-footer">
+        <button class="btn-ghost small" id="modal-prev">← Prev</button>
+        <button class="btn-primary small" id="modal-next">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden star modal -->
+  <div id="hstar-modal" class="modal-bg" aria-hidden="true">
+    <div class="modal-card glass-card hstar-card" role="dialog">
+      <button class="modal-x" id="hstar-x">✕</button>
+      <p class="hstar-icon">⭐</p>
+      <h3 class="hstar-heading">Kafi teez ho!</h3>
+      <p class="hstar-hint" id="hstar-hint-text"></p>
+      <p class="hstar-count" id="hstar-count"></p>
+    </div>
+  </div>
+
+  <!-- One More Thing modal -->
+  <div id="eab-modal" class="modal-bg" aria-hidden="true">
+    <div class="modal-card glass-card eab-card" role="dialog">
+      <button class="modal-x" id="eab-x">✕</button>
+      <p class="eab-icon">💬</p>
+      <p class="eab-msg" id="eab-msg"></p>
+      <button class="btn-ghost small" id="eab-another">One more →</button>
+    </div>
+  </div>
+
+  <!-- Easter egg modal -->
+  <div id="egg-modal" class="modal-bg" aria-hidden="true">
+    <div class="modal-card glass-card egg-card" role="dialog">
+      <button class="modal-x" id="egg-x">✕</button>
+      <p class="egg-icon">🌠</p>
+      <p class="egg-msg" id="egg-msg"></p>
+    </div>
+  </div>
+
+  <p class="shoot-hint" id="shoot-hint">✦ tap a shooting star</p>
+
+  <script src="config.js"></script>
+  <script src="main.js"></script>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <span>among billions, this one is yours ✨ by <strong>Aftab</strong></span>
+  </footer>
+</body>
+</html>
