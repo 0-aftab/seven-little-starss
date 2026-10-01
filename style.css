@@ -647,7 +647,7 @@ html.lite .glass-card { border: 1px solid rgba(255,190,225,0.3); }
 .lite-btn {
   /* bottom-left corner, away from the music button */
   left: 1rem; right: auto;
-  bottom: calc(1rem + env(safe-area-inset-bottom));
+  bottom: calc(2.9rem + env(safe-area-inset-bottom)); /* sits above the footer text */
   width: auto; height: 34px; padding: 0 0.9rem;
   border-radius: 50px; font-family: var(--db);
   font-size: 0.72rem; letter-spacing: 0.06em; white-space: nowrap;
