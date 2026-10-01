@@ -321,7 +321,7 @@ function syncLiteBtn() {
   const btn = document.getElementById('lite-btn'), ic = document.getElementById('lite-icon');
   if (!btn) return;
   btn.classList.toggle('playing', lite);
-  ic.textContent = lite ? '⚡' : '✨';
+  ic.textContent = lite ? 'Lite mode: ON' : 'Lite mode: OFF';
   btn.title = lite ? 'Lite mode ON (tap for full effects)' : 'Lite mode OFF (tap for smoother)';
 }
 function enableLite() {
