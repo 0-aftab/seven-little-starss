@@ -5,13 +5,13 @@ window.SITE_CONFIG = {
   SHOW_NAME: true,
 
   // Site stays locked (after the fake loader) until this moment. Local time of the visitor.
-  LOCK_UNTIL: "2026-10-22T00:00:00",
+  LOCK_UNTIL: "2026-8-22T00:00:00",
 
   SECRET_CODE: "Irham2210",
 
   // Birthday: October 22 (month is 1-12). The year is picked automatically,
   // so the countdown always points at the current year's birthday.
-  BIRTHDAY_MONTH: 10,
+  BIRTHDAY_MONTH: 8,
   BIRTHDAY_DAY: 22,
 
   // Message board (page 8): GitHub Pages has no backend, so messages are sent
