@@ -606,7 +606,6 @@ body::before {
   font-size: clamp(1.1rem, 4vw, 1.5rem); color: var(--lavender);
 }
 
-
 /* ── PERFORMANCE OVERRIDES ────────────────────────── */
 /* backdrop-filter blur is the #1 cause of lag on phones: removed, backgrounds made more opaque instead */
 .glass-card, .wish-card, .countdown-bar, .modal-bg, .music-btn, .moon-dialogue {
@@ -624,50 +623,3 @@ body::before {
 body { background-attachment: scroll !important; }
 body::before { animation: none !important; }
 .landing-wrap::before { animation: none !important; }
-
-
-/* ── LITE MODE (auto-enabled on weak phones) ─────── */
-html.lite *, html.lite *::before, html.lite *::after {
-  text-shadow: none !important; box-shadow: none !important; filter: none !important;
-}
-html.lite .petal-container { display: none; }
-html.lite .moon, html.lite .moon-glow, html.lite .title-em, html.lite .note-icon,
-html.lite .lock-icon, html.lite .open-icon, html.lite .unlock-icon, html.lite .msg-icon,
-html.lite .modal-symbol, html.lite .lock-star, html.lite .btn-cta,
-html.lite .landing-wrap::before, html.lite .snode.open .snode-dot,
-html.lite .h-star, html.lite .h-star-hint, html.lite .h-star.found { animation: none !important; }
-html.lite .h-star, html.lite .h-star-hint { opacity: 1; }
-html.lite .landing-wrap::before { display: none; }
-html.lite body::before { display: none; }
-html.lite .glass-card::before { display: none; }
-html.lite .glass-card { border: 1px solid rgba(255,190,225,0.3); }
-
-
-/* ── BOTTOM BAR: footer text + lite button + music button live in one strip.
-      Pages end above the strip, so nothing can ever overlap. ── */
-:root { --bar-h: 3.4rem; }
-.page {
-  bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
-  padding-bottom: 1.5rem;
-}
-.site-footer {
-  bottom: 0; height: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
-  padding: 0 4rem env(safe-area-inset-bottom, 0px) 7.6rem;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(34,12,56,0.96);
-  border-top: 1px solid rgba(255,179,209,0.2);
-  line-height: 1.35; z-index: 150;
-}
-.music-btn {
-  right: 0.8rem; bottom: calc(0.4rem + env(safe-area-inset-bottom, 0px));
-}
-.lite-btn {
-  left: 0.8rem; right: auto;
-  bottom: calc(0.65rem + env(safe-area-inset-bottom, 0px));
-  width: auto; height: 34px; padding: 0 0.75rem;
-  border-radius: 50px; font-family: var(--db);
-  font-size: 0.66rem; letter-spacing: 0.04em; white-space: nowrap;
-}
-.lite-btn:hover { transform: scale(1.05); }
-.shoot-hint { bottom: calc(4.2rem + env(safe-area-inset-bottom, 0px)); }
-.modal-bg { padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); } /* keep modals clear of the buttons */

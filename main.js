@@ -264,7 +264,6 @@ function resizeSky() {
       hue: Math.random()<0.12 ? (Math.random()<0.5?'rose':'violet') : 'white',
     });
   }
-  if (lite) buildBg();
 }
 
 function makeBokeh() {
@@ -283,10 +282,9 @@ function spawnComet() {
   });
 }
 
-/* ── Lite mode (weak phones): background drawn once, no petals/glows ── */
-let lite = false, bgDirty = true;
-const bgCanvas = document.createElement('canvas');
-function drawBackdrop(ctx, t) {
+function drawSky(t) {
+  const ctx = skyCtx;
+  ctx.clearRect(0,0,skyC.width,skyC.height);
   const g1 = ctx.createRadialGradient(skyC.width*.28,skyC.height*.22,0,skyC.width*.28,skyC.height*.22,skyC.width*.5);
   g1.addColorStop(0,'rgba(190,80,200,0.38)'); g1.addColorStop(0.6,'rgba(120,40,140,0.14)'); g1.addColorStop(1,'transparent');
   ctx.fillStyle=g1; ctx.fillRect(0,0,skyC.width,skyC.height);
@@ -309,41 +307,6 @@ function drawBackdrop(ctx, t) {
     ctx.fill();
   }
 
-}
-function buildBg() {
-  bgCanvas.width = skyC.width; bgCanvas.height = skyC.height;
-  drawBackdrop(bgCanvas.getContext('2d'), 0);
-  bgDirty = true;
-}
-const KEY_LITE = '7ls_v3_lite';
-let liteChosen = false; /* true once the person toggles it themselves */
-function syncLiteBtn() {
-  const btn = document.getElementById('lite-btn'), ic = document.getElementById('lite-icon');
-  if (!btn) return;
-  btn.classList.toggle('playing', lite);
-  ic.textContent = lite ? 'Lite mode: ON' : 'Lite mode: OFF';
-  btn.title = lite ? 'Lite mode ON (tap for full effects)' : 'Lite mode OFF (tap for smoother)';
-}
-function enableLite() {
-  if (lite) return;
-  lite = true;
-  document.documentElement.classList.add('lite');
-  document.getElementById('petal-container').innerHTML = '';
-  buildBg();
-  syncLiteBtn();
-}
-function disableLite() {
-  if (!lite) return;
-  lite = false;
-  document.documentElement.classList.remove('lite');
-  bgDirty = true;
-  syncLiteBtn();
-}
-
-function drawSky(t) {
-  const ctx = skyCtx;
-  ctx.clearRect(0,0,skyC.width,skyC.height);
-  if (lite) ctx.drawImage(bgCanvas,0,0); else drawBackdrop(ctx,t);
   eggHots = [];
   for (let i=comets.length-1; i>=0; i--) {
     const c=comets[i]; c.x+=c.vx; c.y+=c.vy; c.a-=0.007;
@@ -374,8 +337,7 @@ let lastFrame = 0;
 function animateSky(t) {
   requestAnimationFrame(animateSky);
   if (t - lastFrame < 33) return; /* cap at ~30fps */
-  if (lite && !comets.length && !bgDirty) return; /* nothing moving: skip */
-  lastFrame = t; bgDirty = false;
+  lastFrame = t;
   drawSky(t);
 }
 
@@ -384,7 +346,6 @@ function animateSky(t) {
 ═══════════════════════════════════════ */
 const PETALS = ['🌸','🌷','💗','🩷','✿','❀','💮','✨'];
 function spawnPetal() {
-  if (lite) return;
   const c = document.getElementById('petal-container');
   const el = document.createElement('div'); el.className='petal';
   el.textContent = PETALS[Math.floor(Math.random()*PETALS.length)];
@@ -458,14 +419,6 @@ musicBtn.addEventListener('click', () => {
     bgm.play().catch(()=>{}); musicPlaying=true; musicIcon.textContent='♫'; musicBtn.classList.add('playing');
   }
 });
-
-const liteBtn = document.getElementById('lite-btn');
-liteBtn.addEventListener('click', () => {
-  liteChosen = true;
-  if (lite) disableLite(); else enableLite();
-  try { localStorage.setItem(KEY_LITE, lite ? 'on' : 'off'); } catch {}
-});
-syncLiteBtn();
 
 /* ═══════════════════════════════════════
    PAGE NAVIGATION
@@ -770,30 +723,10 @@ function wire() {
 /* ═══════════════════════════════════════
    BOOT
 ═══════════════════════════════════════ */
-function detectWeakDevice() {
-  let saved = null;
-  try { saved = localStorage.getItem(KEY_LITE); } catch {}
-  if (saved === 'on')  { liteChosen = true; enableLite();  return; }
-  if (saved === 'off') { liteChosen = true; return; }
-  const q = new URLSearchParams(location.search);
-  if (q.has('lite') || (navigator.deviceMemory && navigator.deviceMemory <= 4)) { enableLite(); return; }
-  if (q.has('full')) return;
-  /* measure real frame rate for 2.5s; if low, switch to lite */
-  let frames = 0, start = 0;
-  const loop = ts => {
-    if (!start) start = ts;
-    frames++;
-    if (ts - start < 2500) requestAnimationFrame(loop);
-    else if (!liteChosen && frames / ((ts - start) / 1000) < 45) enableLite();
-  };
-  requestAnimationFrame(loop);
-}
-
 async function init() {
   runLoader();
   resizeSky(); window.addEventListener('resize', resizeSky);
   requestAnimationFrame(animateSky);
-  detectWeakDevice();
   try { await fetchData(); } catch { starsData=STAR_MESSAGES; eggsData=EGGS_LOCAL; }
   wire();
   setupHiddenStars();

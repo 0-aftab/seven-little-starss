@@ -5,7 +5,7 @@ window.SITE_CONFIG = {
   SHOW_NAME: true,
 
   // Site stays locked (after the fake loader) until this moment. Local time of the visitor.
-  LOCK_UNTIL: "2026-8-22T00:00:00",
+  LOCK_UNTIL: "2026-10-22T00:00:00",
 
   SECRET_CODE: "Irham2210",
 
