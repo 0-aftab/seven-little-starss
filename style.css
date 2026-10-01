@@ -624,3 +624,24 @@ body::before {
 body { background-attachment: scroll !important; }
 body::before { animation: none !important; }
 .landing-wrap::before { animation: none !important; }
+
+
+/* ── LITE MODE (auto-enabled on weak phones) ─────── */
+html.lite *, html.lite *::before, html.lite *::after {
+  text-shadow: none !important; box-shadow: none !important; filter: none !important;
+}
+html.lite .petal-container { display: none; }
+html.lite .moon, html.lite .moon-glow, html.lite .title-em, html.lite .note-icon,
+html.lite .lock-icon, html.lite .open-icon, html.lite .unlock-icon, html.lite .msg-icon,
+html.lite .modal-symbol, html.lite .lock-star, html.lite .btn-cta,
+html.lite .landing-wrap::before, html.lite .snode.open .snode-dot,
+html.lite .h-star, html.lite .h-star-hint, html.lite .h-star.found { animation: none !important; }
+html.lite .h-star, html.lite .h-star-hint { opacity: 1; }
+html.lite .landing-wrap::before { display: none; }
+html.lite body::before { display: none; }
+html.lite .glass-card::before { display: none; }
+html.lite .glass-card { border: 1px solid rgba(255,190,225,0.3); }
+
+
+/* ── LITE TOGGLE BUTTON (sits left of the music button) ── */
+.lite-btn { right: calc(1rem + 42px + 0.6rem); font-size: 1rem; }
