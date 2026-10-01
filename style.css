@@ -605,3 +605,22 @@ body::before {
   font-family: var(--dp); font-style: italic;
   font-size: clamp(1.1rem, 4vw, 1.5rem); color: var(--lavender);
 }
+
+
+/* ── PERFORMANCE OVERRIDES ────────────────────────── */
+/* backdrop-filter blur is the #1 cause of lag on phones: removed, backgrounds made more opaque instead */
+.glass-card, .wish-card, .countdown-bar, .modal-bg, .music-btn, .moon-dialogue {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.glass-card  { background: linear-gradient(160deg, rgba(70,28,100,0.88), rgba(60,20,85,0.88)) !important; }
+.wish-card   { background: rgba(66,26,92,0.85) !important; }
+.countdown-bar { background: rgba(40,14,62,0.95) !important; }
+.modal-bg    { background: rgba(30,8,48,0.88) !important; }
+/* stop the always-animating aurora border + heavy glow filters */
+.glass-card::before { animation: none !important; }
+.glass-card::after  { display: none; }
+.petal, .moon-face, .loader-stars { filter: none !important; }
+body { background-attachment: scroll !important; }
+body::before { animation: none !important; }
+.landing-wrap::before { animation: none !important; }

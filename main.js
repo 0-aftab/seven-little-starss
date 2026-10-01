@@ -254,7 +254,7 @@ function resizeSky() {
   skyC.width  = window.innerWidth;
   skyC.height = window.innerHeight;
   skyStars = [];
-  const n = Math.floor((skyC.width * skyC.height) / 3000);
+  const n = Math.floor((skyC.width * skyC.height) / 9000);
   makeBokeh();
   for (let i = 0; i < n; i++) {
     skyStars.push({
@@ -267,7 +267,7 @@ function resizeSky() {
 }
 
 function makeBokeh() {
-  bokeh = Array.from({length: 16}, () => ({
+  bokeh = Array.from({length: 6}, () => ({
     x: Math.random()*skyC.width, y: Math.random()*skyC.height, r: Math.random()*70+35,
     s: Math.random()*0.00025+0.00008, p: Math.random()*6.28,
     c: BOKEH_COLS[Math.floor(Math.random()*BOKEH_COLS.length)],
@@ -333,7 +333,13 @@ skyC.addEventListener('click', e => {
 setInterval(spawnComet, 3800);
 setTimeout(spawnComet, 700);
 setTimeout(spawnComet, 2000);
-function animateSky(t) { drawSky(t); requestAnimationFrame(animateSky); }
+let lastFrame = 0;
+function animateSky(t) {
+  requestAnimationFrame(animateSky);
+  if (t - lastFrame < 33) return; /* cap at ~30fps */
+  lastFrame = t;
+  drawSky(t);
+}
 
 /* ═══════════════════════════════════════
    PETALS
@@ -347,7 +353,7 @@ function spawnPetal() {
   el.style.cssText=`left:${Math.random()*110-5}%;font-size:${Math.random()*8+10}px;animation-duration:${dur}s;animation-delay:${delay}s;--drift:${(Math.random()-0.5)*140}px;`;
   c.appendChild(el); setTimeout(()=>el.remove(),(dur+delay+1)*1000);
 }
-setInterval(spawnPetal,1200);
+setInterval(spawnPetal,2800);
 for (let i=0; i<6; i++) setTimeout(spawnPetal,i*400);
 
 /* ═══════════════════════════════════════
